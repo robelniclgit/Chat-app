@@ -11,3 +11,10 @@ socket.on('disconnect', () => {
 socket.on('newMessage', (message) => {
     console.log('newMessage', message);
 });
+
+socket.emit('createMessage', {
+    from: 'client: 1',
+    text: 'client: just text'
+}, (message) => {
+    console.log('client fonction callback: ', message);
+})
