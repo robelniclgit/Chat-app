@@ -15,6 +15,28 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
     console.log("Un nouvel utilisateur connécté");
 
+    socket.emit('newMessage', {
+        from: "Admin",
+        text: "Bienvenu dans l'application",
+        createdAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('newMessage', {
+        from: "Admin",
+        text: "Rejoint d'un nouveau membre",
+        createdAt: new Date().getTime()
+    });
+
+    socket.on('createMessage', (message) => {
+        console.log("createMessage", message);
+
+        io.emit('newMessage', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        });
+    });
+
     socket.on('disconnect', (socket) => {
         console.log("Utilisateur déconnécté");
     });
