@@ -22,6 +22,8 @@ socket.on('newMessage', (message) => {
     div.innerHTML = html;
 
     document.querySelector("#all_messages").appendChild(div);
+
+    onScrollBottom();
 });
 
 socket.on('newLocationMessage', (message) => {
@@ -38,6 +40,8 @@ socket.on('newLocationMessage', (message) => {
     div.innerHTML = html;
 
     document.querySelector("#all_messages").appendChild(div);
+
+    onScrollBottom();
 });
 
 
@@ -70,3 +74,8 @@ document.querySelector("#send-location").addEventListener("click", function(e){
         alert("position non trouvé");
     })
 });
+
+function onScrollBottom() {
+    let messages = document.querySelector("#all_messages").lastElementChild;
+    messages.scrollIntoView();
+}
