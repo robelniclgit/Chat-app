@@ -3,6 +3,8 @@ let socket = io();
 
 socket.on('connect', () => {
 
+    // console.log('listes utilisteurs', users);
+
     // Récupération des paramètres GET
     let searchQuery = window.location.search.substring(1);
     // On décode le paramètre et structurer en tant que JSON
@@ -26,6 +28,22 @@ socket.on('connect', () => {
 
 socket.on('disconnect', () => {
     console.log('déconnexion au serveur');
+});
+
+socket.on('updateUserList', function(users){
+    let ol = document.createElement("ol");
+
+    users.forEach(user => {
+        let li = document.createElement("li");
+        li.innerHTML = user;
+        ol.appendChild(li);
+    });
+        
+    let userList = document.querySelector("#users");
+    userList.innerHTML = "";
+    userList.appendChild(ol);
+
+    console.log(users);
 });
 
 socket.on('newMessage', (message) => {
@@ -69,7 +87,6 @@ document.querySelector("#submit").addEventListener("click", function(e) {
     e.preventDefault();
 
     socket.emit('createMessage', {
-        from: "User",
         text: document.querySelector("#message").value
     }, function(message){
         console.log(message);
