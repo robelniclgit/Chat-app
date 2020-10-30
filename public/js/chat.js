@@ -1,7 +1,27 @@
+// instanciation du socket du côté client
 let socket = io();
 
 socket.on('connect', () => {
-    console.log('connexion au serveur');
+
+    // Récupération des paramètres GET
+    let searchQuery = window.location.search.substring(1);
+    // On décode le paramètre et structurer en tant que JSON
+    let params = decodeURI(searchQuery).replace(/&/g, '","').replace(/\+/g, '').replace(/=/g, '":"');
+    params = JSON.parse('{"' + params + '"}');
+
+    // on emètte une socket de join vers le serveur
+    socket.emit('join', params, function(err){
+        // si la fonction de callback retourne une erreur
+        if(err){
+            alert(err);
+            window.location.href = "/";
+        }
+        // si pas d'erreur
+        else{
+            console.log('No error');
+        }
+    });
+
 });
 
 socket.on('disconnect', () => {

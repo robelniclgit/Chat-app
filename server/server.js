@@ -4,6 +4,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
+const {isRealString} = require('./utils/isRealString');
 const publicPath = path.join(__dirname, '/../public');
 const port = process.env.PORT || 3000;
 
@@ -14,11 +15,25 @@ let io = socketIO(server);
 app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
+
     console.log("Un nouvel utilisateur connécté");
 
-    socket.emit('newMessage', generateMessage("Admin", "Bienvenu dans l'application"));
+    socket.on('join', (params, callback) => {
 
-    socket.broadcast.emit('newMessage', generateMessage("Admin", "Nouveau membre"));
+        console.log("mes parametres", params, params.username, !isRealString(params.username), !isRealString(params.room));
+
+        if(!isRealString(params.username) || !isRealString(params.room)){
+            callback('Name and room are required');
+        }
+
+        socket.join(params.room);
+
+        socket.emit('newMessage', generateMessage("Admin", "Bienvenu dans l'application"));
+
+        socket.broadcast.emit('newMessage', generateMessage("Admin", "Nouveau membre : "+params.username+" "+params.room));
+
+        callback();
+    });
 
     socket.on('createMessage', (message, callback) => {
         console.log("createMessage", message);
