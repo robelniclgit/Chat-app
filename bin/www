@@ -1,0 +1,34 @@
+/**
+ * IMPORT : de tous les éléments qu'on devra utilisé
+ * c'est dans ce fichier qu'on instancie app = express()
+ * app.js dans la racine du projet
+ */
+const app = require('../app');
+// Déclaration des autres constantes de nodeJS
+const http = require('http');
+const socketIO = require('socket.io');
+
+// PORT utilisé par l'application
+const port = process.env.PORT || 3000;
+
+// Création du serveur
+const server = http.createServer(app);
+// Création du socket
+const io = socketIO(server);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port, function() {
+    console.log('Express server listening on port ' + server.address().port);
+});
+server.on('error', onError);
+server.on('listening', onListening);
+
+// Des fonctions de callback sur server au dessus
+function onError(err){
+    console.log(err);
+}
+function onListening(){
+    console.log(server.address());
+}

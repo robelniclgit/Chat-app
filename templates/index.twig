@@ -1,0 +1,22 @@
+{% extends "layouts/base.twig" %}
+
+{% block body %}
+    <h1>{{ title }}</h1>
+    <p>Welcome to {{ title }}</p>
+    <div class="centered">
+        <form action="/chat.html">
+            <div class="form-field">Rejoignez le chat</div>
+            <div class="form-field">
+                <label for="username">username</label>
+                <input type="text" name="username" id="username" autofocus/>
+            </div>
+            <div class="form-field">
+                <label for="room">room</label>
+                <input type="text" name="room" id="room" autofocus/>
+            </div>
+            <div class="form-field">
+                <button>Rejoigner</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

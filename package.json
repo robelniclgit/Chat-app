@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec \"npm test\"",
-    "start": "nodemon server/server.js"
+    "start": "nodemon ./bin/www"
   },
   "engines": {
     "node": "12.18.4"
@@ -16,7 +16,13 @@
   "dependencies": {
     "express": "^4.17.1",
     "moment": "^2.29.1",
-    "socket.io": "^2.3.0"
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.3.5",
+    "sequelize-auto": "^0.6.7",
+    "sequelize-cli": "^6.2.0",
+    "socket.io": "^2.3.0",
+    "twig": "^1.15.2"
   },
   "devDependencies": {
     "expect": "^26.6.1",
