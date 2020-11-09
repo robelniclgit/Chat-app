@@ -37,13 +37,10 @@
     <script>
         $("#form-register-user").on("submit", function(e){
             e.preventDefault();
-
-            let data = $(this).serializeArray();
-
-            $.post('/registerSave', data, function(response){
+            $.post('/registerSave', $(this).serializeArray(), function(response){
                 console.log(response);
+                alert(response.message);
             });
-            
         });
     </script>
 {% endblock %}

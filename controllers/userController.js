@@ -18,6 +18,7 @@ module.exports = {
             const data = req.body;
 
             // création transaction géré automatiquement
+            // s'il y a erreur, ROLLBACK est executé automatiquement
             const result = await models.sequelize.transaction(async (t) => {
                 // création de l'utilisateur en ajoutant le transaction t
                 const user = await models.User.create({
