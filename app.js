@@ -20,6 +20,12 @@ app.use('/api', apiRouter);
 // Utilisé tous les fichiers dans le repertoire public
 app.use(express.static(publicPath));
 
+// DATA PARSING : Méthode permettant de parser les données poster ou reçu dans les méthod en JSON
+app.use(express.urlencoded({
+    extended: false
+}));
+app.use(express.json());
+
 // VIEWS : setter le template qu'on va utilisé (twig)
 app.set('view engine', 'twig');
 // VIEWS : définir le répértoire twig qu'on a besoin pour les fichiers

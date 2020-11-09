@@ -5,11 +5,24 @@
  */
 const express = require('express');
 const router = express.Router();
+const bodyParser = require('body-parser');
 
-router.get('/', (req, res) => {
-    res.render('index', {
-        title: 'Chat App Master'
-    });
-});
+/**
+ * POST
+ * req.body undefined,
+ * Ajouter cette méthode dans le ROUTER pour qu'on récupère les données posté en ajax dans le FRONT END
+ */ 
+router.use(bodyParser.urlencoded({
+    extended: false
+}));
+router.use(bodyParser.json());
+
+// liste des controlleurs
+const userController = require('../controllers/userController');
+
+// Formulaire enregistrement nouvel utilisateur
+router.get('/register', userController.register);
+router.post('/registerSave', userController.registerSave);
+
 
 module.exports = router;
