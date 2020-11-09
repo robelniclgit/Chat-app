@@ -4,19 +4,31 @@
     <h1>{{ title }}</h1>
     <p>Welcome to {{ title }}</p>
     <div class="centered">
-        <form action="/chat.html">
+        <form id="form-authenticate-user">
             <div class="form-field">Rejoignez le chat</div>
             <div class="form-field">
                 <label for="username">username</label>
                 <input type="text" name="username" id="username" autofocus/>
             </div>
             <div class="form-field">
-                <label for="room">room</label>
-                <input type="text" name="room" id="room" autofocus/>
+                <label for="password">password</label>
+                <input type="text" name="password" id="password" autofocus/>
             </div>
             <div class="form-field">
-                <button>Rejoigner</button>
+                <button>Enregistrer</button>
             </div>
         </form>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $("#form-authenticate-user").on("submit", function(e){
+            e.preventDefault();
+            $.post('/login', $(this).serializeArray(), function(response){
+                console.log('Authenticate', response);
+            });
+        });
+    </script>
 {% endblock %}

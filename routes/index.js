@@ -20,9 +20,14 @@ router.use(bodyParser.json());
 // liste des controlleurs
 const userController = require('../controllers/userController');
 
+// authentification utilisateur
+router.get('/login', userController.login);
+router.post('/loginSave', userController.loginSave);
 // Formulaire enregistrement nouvel utilisateur
 router.get('/register', userController.register);
 router.post('/registerSave', userController.registerSave);
+// liste des utilisateurs
+router.get('/users', userController.allUsers);
 
 
 module.exports = router;

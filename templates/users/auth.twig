@@ -2,21 +2,10 @@
 
 {% block body %}
     <h1>{{ title }}</h1>
-    <p>REGISTER : Welcome to {{ title }}</p>
+    <p>Welcome to {{ title }}</p>
     <div class="centered">
-        <form id="form-register-user">
-            <div class="form-field">
-                <label for="email">email</label>
-                <input type="text" name="email" id="email" autofocus/>
-            </div>
-            <div class="form-field">
-                <label for="firstname">firstname</label>
-                <input type="text" name="firstname" id="firstname" autofocus/>
-            </div>
-            <div class="form-field">
-                <label for="lastname">lastname</label>
-                <input type="text" name="lastname" id="lastname" autofocus/>
-            </div>
+        <form id="form-authenticate-user">
+            <div class="form-field">Rejoignez le chat</div>
             <div class="form-field">
                 <label for="username">username</label>
                 <input type="text" name="username" id="username" autofocus/>
@@ -35,10 +24,9 @@
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $("#form-register-user").on("submit", function(e){
+        $("#form-authenticate-user").on("submit", function(e){
             e.preventDefault();
-            $.post('/registerSave', $(this).serializeArray(), function(response){
-                alert(response.message);
+            $.post('/loginSave', $(this).serializeArray(), function(response){
                 location.href = '/users';
             });
         });

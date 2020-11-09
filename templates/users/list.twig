@@ -1,0 +1,17 @@
+{% extends "layouts/base.twig" %}
+
+{% block body %}
+    <h1>ALL USERS</h1>
+    <p>ALL USERS</p>
+    <div class="centered">
+        {% for user in users %}
+            <div>
+                {{ user.firstName }} | {{ user.lastName }} | {{ user.email }} | {{ user.username }}
+            </div>
+        {% else %}
+            <div>
+                Aucun enregistrement
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
