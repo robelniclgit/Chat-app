@@ -73,12 +73,15 @@ module.exports = {
     },
 
     logout: async (req, res) => {
-        if(req.session.user){
-            req.session.destroy( err => {
-                console.log('error déconnexion');
-            });
-        }
-        res.redirect('/login');
+        // Destruction du variable de session
+        req.session.destroy( err => {
+            if(err){
+                console.log('error déconnexion', err);
+            }
+
+            res.clearCookie(process.env.SESS_NAME);
+            res.redirect('/login');
+        });
     },
 
     // Formulaire authentification
@@ -131,7 +134,7 @@ module.exports = {
             // SESSION : on stocke l'information concernant l'utilisateur dans la session
             req.session.userId = userTemp.id;
 
-            return res.redirect('/users');
+            res.redirect('/users');
 
             // return res.status(200).json({
             //     code: 'VALIDE_CREDENTIALS',
