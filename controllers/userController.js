@@ -6,6 +6,9 @@ module.exports = {
 
     // Affichage de tous les utilisateurs de la base de données
     allUsers: async (req, res) => {
+        console.log('all users', req.session);
+
+        // rechercher tous les utilisateurs
         const users = await models.User.findAll({
             order: [
                 ['createdAt', 'DESC']
@@ -69,6 +72,15 @@ module.exports = {
         
     },
 
+    logout: async (req, res) => {
+        if(req.session.user){
+            req.session.destroy( err => {
+                console.log('error déconnexion');
+            });
+        }
+        res.redirect('/login');
+    },
+
     // Formulaire authentification
     login: async (req, res) => {
         res.render('users/auth', {
@@ -81,7 +93,7 @@ module.exports = {
         // récupération des éléments postés
         const { username, password } = req.body;
 
-        console.log('data posté', req.body);
+        console.log('data posté : ', req.body);
 
         // vérifier les variables si ce n'est pas vide
         if( username=='' || password==''){
@@ -116,13 +128,18 @@ module.exports = {
                 });
             }
 
-            return res.status(200).json({
-                code: 'VALIDE_CREDENTIALS',
-                message: 'Authentification avec succès'
-            });
+            // SESSION : on stocke l'information concernant l'utilisateur dans la session
+            req.session.userId = userTemp.id;
+
+            return res.redirect('/users');
+
+            // return res.status(200).json({
+            //     code: 'VALIDE_CREDENTIALS',
+            //     message: 'Authentification avec succès'
+            // });
 
         } catch (error) {
-            
+            console.log(error);
         }
     }
 

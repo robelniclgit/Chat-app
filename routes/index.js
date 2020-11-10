@@ -20,14 +20,19 @@ router.use(bodyParser.json());
 // liste des controlleurs
 const userController = require('../controllers/userController');
 
+// liste des controlleurs
+const { authenticate } = require('../controllers/middleware/auth');
+
+// Page d'accueil de l'application
+router.get('/users', authenticate, userController.allUsers);
 // authentification utilisateur
 router.get('/login', userController.login);
 router.post('/loginSave', userController.loginSave);
+// déconnexion utilisateur
+router.post('/logout', authenticate, userController.logout);
 // Formulaire enregistrement nouvel utilisateur
 router.get('/register', userController.register);
 router.post('/registerSave', userController.registerSave);
-// liste des utilisateurs
-router.get('/users', userController.allUsers);
 
 
 module.exports = router;
